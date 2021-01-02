@@ -15,4 +15,8 @@ compileSdkVersion = 29
 targetSdkVersion = 29
 ```
 
-
+Run on Android Device
+```bash
+npm install
+react-native run-android
+```
