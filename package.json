@@ -1,0 +1,47 @@
+{
+  "name": "GameNewsPlus+",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "@react-native-community/masked-view": "^0.1.10",
+    "@react-navigation/bottom-tabs": "^5.11.2",
+    "@react-navigation/stack": "^5.12.8",
+    "react": "16.13.1",
+    "react-native": "0.63.4",
+    "react-native-gesture-handler": "^1.9.0",
+    "react-native-reanimated": "^1.13.2",
+    "react-native-safe-area-context": "^3.1.9",
+    "react-native-safe-area-view": "^1.1.1",
+    "react-native-screens": "^2.16.1",
+    "react-native-svg": "^12.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/runtime": "^7.8.4",
+    "@eva-design/eva": "^2.0.0",
+    "@react-native-community/eslint-config": "^1.1.0",
+    "@react-navigation/drawer": "^5.11.4",
+    "@react-navigation/native": "^5.8.10",
+    "@ui-kitten/components": "^5.0.0",
+    "@ui-kitten/eva-icons": "^5.0.0",
+    "axios": "^0.21.1",
+    "babel-jest": "^25.1.0",
+    "deprecated-react-native-listview": "^0.0.6",
+    "eslint": "^6.5.1",
+    "jest": "^25.1.0",
+    "metro-react-native-babel-preset": "^0.59.0",
+    "react-native-loading-spinner-overlay": "^2.0.0",
+    "react-native-ui-kitten": "^4.4.1",
+    "react-test-renderer": "16.13.1"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
