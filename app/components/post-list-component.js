@@ -53,7 +53,8 @@ export default class PostListComponent extends Component {
               ) : (
                 <Accent {...props} post={post} index={index} />
               )
-            }></Card>
+            }
+          />
         </React.Fragment>
       </View>
     );
@@ -107,25 +108,7 @@ const AccentFirst = ({post, index}) => (
       <Text style={styles.firstText}>
         {Util.replaceSpecialCharacters(post.title.rendered)}
       </Text>
-      <View style={{flex: 1, flexDirection: 'row'}}>
-        <Avatar
-          style={styles.avatar}
-          shape="medium"
-          source={
-            post && post._embedded.author[0].avatar_urls['24'] !== undefined
-              ? {
-                  uri: post._embedded.author[0].avatar_urls['24'].replace(
-                    '//www.gravatar.com',
-                    'https://www.gravatar.com',
-                  ),
-                }
-              : require('../../img/avatars/boy.jpg')
-          }
-        />
-        <Text style={styles.firstAuthor}>
-          {' ' + post._embedded.author[0].name}
-        </Text>
-      </View>
+      {<AvatarView post={post} index={index} />}
     </View>
   </View>
 );
@@ -142,34 +125,32 @@ const Accent = ({post, index}) => (
       <Text style={styles.text}>
         {Util.replaceSpecialCharacters(post.title.rendered)}
       </Text>
-      <View style={{flex: 1, flexDirection: 'row'}}>
-        <Avatar
-          style={styles.avatar}
-          shape="medium"
-          source={
-            post && post._embedded.author[0].avatar_urls['24'] !== undefined
-              ? {
-                  uri: post._embedded.author[0].avatar_urls['24'].replace(
-                    '//www.gravatar.com',
-                    'https://www.gravatar.com',
-                  ),
-                }
-              : require('../../img/avatars/boy.jpg')
-          }
-        />
-        <Text style={styles.author}>{' ' + post._embedded.author[0].name}</Text>
-      </View>
+      {<AvatarView post={post} index={index} />}
     </View>
   </View>
 );
 
-const _renderPostText = (text) => {
-  if (text) {
-    return <Text style={{fontFamily: null}}>{text}</Text>;
-  } else {
-    return <View />;
-  }
-};
+const AvatarView = ({post, index}) => (
+  <View style={{flexDirection: 'row'}}>
+    <Avatar
+      style={styles.avatar}
+      shape="medium"
+      source={
+        post && post._embedded.author[0].avatar_urls['24'] !== undefined
+          ? {
+              uri: post._embedded.author[0].avatar_urls['24'].replace(
+                '//www.gravatar.com',
+                'https://www.gravatar.com',
+              ),
+            }
+          : require('../../img/avatars/boy.jpg')
+      }
+    />
+    <Text style={index === 0 ? styles.firstAuthor : styles.author}>
+      {' ' + post._embedded.author[0].name}
+    </Text>
+  </View>
+);
 
 const styles = StyleSheet.create({
   topContainer: {
