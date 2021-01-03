@@ -6,6 +6,7 @@ import {
   View,
   useWindowDimensions,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import {
   Avatar,
@@ -17,6 +18,7 @@ import {
 } from '@ui-kitten/components';
 import {UtilFunctions} from './util/util.functions';
 import HTML from 'react-native-render-html';
+import Moment from 'moment';
 
 const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
 
@@ -38,9 +40,11 @@ export const DetailScreen = ({navigation, route}) => {
         accessoryLeft={BackAction}
       />
       <Divider />
-      <View style={{height: '100%', backgroundColor: '#fff', padding: 10}}>
-        <View>{<AvatarView post={post} />}</View>
-        <View>
+      <View style={{height: '100%', backgroundColor: '#fff', padding: 0}}>
+        <View style={{padding: 15, paddingBottom: 5}}>
+          {<AvatarView post={post} />}
+        </View>
+        <View style={{padding: 15, paddingBottom: 5}}>
           <Text style={styles.firstText}>
             {UtilFunctions.replaceSpecialCharacters(post.title.rendered)}
           </Text>
@@ -53,15 +57,22 @@ export const DetailScreen = ({navigation, route}) => {
             }}
           />
         </View>
-        <View>
-          <ScrollView style={{flex: 1}}>
+        <View style={{flex: 1, padding: 15, paddingBottom: 5}}>
+          <ScrollView>
             <HTML
-              source={{
-                html: UtilFunctions.replaceSpecialCharacters(
-                  post.content.rendered,
-                ),
+              tagsStyles={{
+                body: {fontSize: 18},
+                p: {fontSize: 18, fontWeight: 'normal'},
+                strong: {fontSize: 20},
+                blockquote: {fontSize: 18},
+                a: {fontSize: 18, color: '#000'},
+                em: {fontSize: 18},
+                img: {height: 250, width: 350},
               }}
-              contentWidth={contentWidth}
+              html={post.content.rendered}
+              imagesMaxWidth={Dimensions.get('window').width}
+              ignoredStyles={['width', 'height', 'video']}
+              onLinkPress={(evt, href) => this.onLinkPress(href)}
             />
           </ScrollView>
         </View>
@@ -74,7 +85,7 @@ const AvatarView = ({post}) => (
   <View style={{flexDirection: 'row'}}>
     <Avatar
       style={styles.avatar}
-      shape="rounded"
+      shape="round"
       source={
         post && post._embedded.author[0].avatar_urls['24'] !== undefined
           ? {
@@ -86,7 +97,12 @@ const AvatarView = ({post}) => (
           : require('../img/avatars/boy.jpg')
       }
     />
-    <Text style={styles.author}>{' ' + post._embedded.author[0].name}</Text>
+    <View>
+      <Text style={styles.author}>{' ' + post._embedded.author[0].name}</Text>
+      <Text style={styles.createdDate}>
+        {Moment(post.date).format('MMMM Do YYYY,h:mm')}
+      </Text>
+    </View>
   </View>
 );
 
@@ -107,15 +123,20 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   postImg: {
-    height: 240,
+    height: 200,
     width: '100%',
     borderRadius: 3,
   },
   author: {
-    fontSize: 12,
+    fontSize: 13,
     marginTop: 3,
     fontWeight: 'bold',
     color: '#555',
+  },
+  createdDate: {
+    fontSize: 13,
+    marginTop: 3,
+    color: '#999',
   },
   avatar: {
     margin: 0,
