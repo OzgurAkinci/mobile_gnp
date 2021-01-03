@@ -38,7 +38,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -53,5 +53,99 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>NotoSans-Black.ttf</string>
+		<string>NotoSans-BlackItalic.ttf</string>
+		<string>NotoSans-Bold.ttf</string>
+		<string>NotoSans-BoldItalic.ttf</string>
+		<string>NotoSans-Condensed.ttf</string>
+		<string>NotoSans-CondensedBlack.ttf</string>
+		<string>NotoSans-CondensedBlackItalic.ttf</string>
+		<string>NotoSans-CondensedBold.ttf</string>
+		<string>NotoSans-CondensedBoldItalic.ttf</string>
+		<string>NotoSans-CondensedExtraBold.ttf</string>
+		<string>NotoSans-CondensedExtraBoldItalic.ttf</string>
+		<string>NotoSans-CondensedExtraLight.ttf</string>
+		<string>NotoSans-CondensedExtraLightItalic.ttf</string>
+		<string>NotoSans-CondensedItalic.ttf</string>
+		<string>NotoSans-CondensedLight.ttf</string>
+		<string>NotoSans-CondensedLightItalic.ttf</string>
+		<string>NotoSans-CondensedMedium.ttf</string>
+		<string>NotoSans-CondensedMediumItalic.ttf</string>
+		<string>NotoSans-CondensedSemiBold.ttf</string>
+		<string>NotoSans-CondensedSemiBoldItalic.ttf</string>
+		<string>NotoSans-CondensedThin.ttf</string>
+		<string>NotoSans-CondensedThinItalic.ttf</string>
+		<string>NotoSans-ExtraBold.ttf</string>
+		<string>NotoSans-ExtraBoldItalic.ttf</string>
+		<string>NotoSans-ExtraCondensed.ttf</string>
+		<string>NotoSans-ExtraCondensedBlack.ttf</string>
+		<string>NotoSans-ExtraCondensedBlackItalic.ttf</string>
+		<string>NotoSans-ExtraCondensedBold.ttf</string>
+		<string>NotoSans-ExtraCondensedBoldItalic.ttf</string>
+		<string>NotoSans-ExtraCondensedExtraBold.ttf</string>
+		<string>NotoSans-ExtraCondensedExtraBoldItalic.ttf</string>
+		<string>NotoSans-ExtraCondensedExtraLight.ttf</string>
+		<string>NotoSans-ExtraCondensedExtraLightItalic.ttf</string>
+		<string>NotoSans-ExtraCondensedItalic.ttf</string>
+		<string>NotoSans-ExtraCondensedLight.ttf</string>
+		<string>NotoSans-ExtraCondensedLightItalic.ttf</string>
+		<string>NotoSans-ExtraCondensedMedium.ttf</string>
+		<string>NotoSans-ExtraCondensedMediumItalic.ttf</string>
+		<string>NotoSans-ExtraCondensedSemiBold.ttf</string>
+		<string>NotoSans-ExtraCondensedSemiBoldItalic.ttf</string>
+		<string>NotoSans-ExtraCondensedThin.ttf</string>
+		<string>NotoSans-ExtraCondensedThinItalic.ttf</string>
+		<string>NotoSans-ExtraLight.ttf</string>
+		<string>NotoSans-ExtraLightItalic.ttf</string>
+		<string>NotoSans-Italic.ttf</string>
+		<string>NotoSans-Light.ttf</string>
+		<string>NotoSans-LightItalic.ttf</string>
+		<string>NotoSans-Medium.ttf</string>
+		<string>NotoSans-MediumItalic.ttf</string>
+		<string>NotoSans-Regular.ttf</string>
+		<string>NotoSans-SemiBold.ttf</string>
+		<string>NotoSans-SemiBoldItalic.ttf</string>
+		<string>NotoSans-SemiCondensed.ttf</string>
+		<string>NotoSans-SemiCondensedBlack.ttf</string>
+		<string>NotoSans-SemiCondensedBlackItalic.ttf</string>
+		<string>NotoSans-SemiCondensedBold.ttf</string>
+		<string>NotoSans-SemiCondensedBoldItalic.ttf</string>
+		<string>NotoSans-SemiCondensedExtraBold.ttf</string>
+		<string>NotoSans-SemiCondensedExtraBoldItalic.ttf</string>
+		<string>NotoSans-SemiCondensedExtraLight.ttf</string>
+		<string>NotoSans-SemiCondensedExtraLightItalic.ttf</string>
+		<string>NotoSans-SemiCondensedItalic.ttf</string>
+		<string>NotoSans-SemiCondensedLight.ttf</string>
+		<string>NotoSans-SemiCondensedLightItalic.ttf</string>
+		<string>NotoSans-SemiCondensedMedium.ttf</string>
+		<string>NotoSans-SemiCondensedMediumItalic.ttf</string>
+		<string>NotoSans-SemiCondensedSemiBold.ttf</string>
+		<string>NotoSans-SemiCondensedSemiBoldItalic.ttf</string>
+		<string>NotoSans-SemiCondensedThin.ttf</string>
+		<string>NotoSans-SemiCondensedThinItalic.ttf</string>
+		<string>NotoSans-Thin.ttf</string>
+		<string>NotoSans-ThinItalic.ttf</string>
+		<string>OpenSans-Bold.ttf</string>
+		<string>OpenSans-BoldItalic.ttf</string>
+		<string>OpenSans-CondLight.ttf</string>
+		<string>OpenSans-CondLightItalic.ttf</string>
+		<string>OpenSans-CondLighttalic.ttf</string>
+		<string>OpenSans-ExtraBold.ttf</string>
+		<string>OpenSans-ExtraBoldItalic.ttf</string>
+		<string>OpenSans-Italic.ttf</string>
+		<string>OpenSans-Light.ttf</string>
+		<string>OpenSans-LightItalic.ttf</string>
+		<string>OpenSans-Regular.ttf</string>
+		<string>OpenSans-Semibold.ttf</string>
+		<string>OpenSans-SemiboldItalic.ttf</string>
+		<string>CrimsonText-Bold.ttf</string>
+		<string>CrimsonText-BoldItalic.ttf</string>
+		<string>CrimsonText-Italic.ttf</string>
+		<string>CrimsonText-Regular.ttf</string>
+		<string>CrimsonText-SemiBold.ttf</string>
+		<string>CrimsonText-SemiBoldItalic.ttf</string>
+	</array>
 </dict>
 </plist>

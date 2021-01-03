@@ -8,6 +8,7 @@ import {
   ScrollView,
   Dimensions,
   TouchableOpacity,
+  WebView,
 } from 'react-native';
 import {
   Avatar,
@@ -80,7 +81,7 @@ export const DetailScreen = ({navigation, route}) => {
                 em: {fontSize: 16},
                 img: {height: 250, width: 350},
               }}
-              html={post.content.rendered}
+              source={post.content.rendered}
               imagesMaxWidth={Dimensions.get('window').width}
               ignoredStyles={['width', 'height', 'video']}
               onLinkPress={(evt, href) => this.onLinkPress(href)}
@@ -123,6 +124,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#333',
+    fontFamily: 'CrimsonText-Bold',
   },
   postImg: {
     height: 150,

@@ -32,14 +32,13 @@ export default class PostListComponent extends Component {
 
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, backgroundColor: '#fff'}}>
         <Spinner
           visible={this.state.loading}
           textContent={'Loading..'}
           textStyle={styles.spinnerTextStyle}
         />
         <FlatList
-          style={styles.flatList}
           data={this.state.dataSource}
           onEndReached={this.getPosts}
           onEndReachedThreshold={0.7}
@@ -53,32 +52,30 @@ export default class PostListComponent extends Component {
   }
 
   _renderRow(post, index) {
-    return (
-      <View>
-        <React.Fragment>
-          <Card
-            style={styles.card}
-            accent={(props) =>
-              index === 0 ? (
-                <TouchableOpacity
-                  onPress={() => {
-                    this.handleNavigatePostDetail(post);
-                  }}>
-                  <AccentFirst {...props} post={post} index={index} />
-                </TouchableOpacity>
-              ) : (
-                <TouchableOpacity
-                  onPress={() => {
-                    this.handleNavigatePostDetail(post);
-                  }}>
-                  <Accent {...props} post={post} index={index} />
-                </TouchableOpacity>
-              )
-            }
-          />
-        </React.Fragment>
-      </View>
-    );
+    if (index === 0) {
+      return (
+        <View style={{flex: 1}}>
+          <TouchableOpacity
+            onPress={() => {
+              this.handleNavigatePostDetail(post);
+            }}>
+            <AccentFirst post={post} index={index} />
+          </TouchableOpacity>
+        </View>
+      );
+    } else {
+      return (
+        <View
+          style={{flex: 1, borderBottomWidth: 1, borderBottomColor: '#e7e7e7'}}>
+          <TouchableOpacity
+            onPress={() => {
+              this.handleNavigatePostDetail(post);
+            }}>
+            <Accent post={post} index={index} />
+          </TouchableOpacity>
+        </View>
+      );
+    }
   }
 
   // Functions
@@ -135,7 +132,8 @@ const Accent = ({post, index}) => (
           top: 0,
           left: 0,
           padding: 5,
-          borderBottomRightRadius: 8,
+          borderBottomRightRadius: 10,
+          borderTopLeftRadius: 10,
           opacity: 0.9,
           backgroundColor: '#333',
         }}>
@@ -145,7 +143,7 @@ const Accent = ({post, index}) => (
       </View>
     </View>
     <View style={styles.itemRight}>
-      <View style={{flex: 1, padding: 10}}>
+      <View style={{flex: 1, paddingLeft: 10, paddingRight: 10}}>
         <Text style={styles.text}>
           {UtilFunctions.replaceSpecialCharacters(post.title.rendered)}
         </Text>
@@ -180,11 +178,9 @@ const AvatarView = ({post, index}) => (
 const styles = StyleSheet.create({
   topContainer: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     flexWrap: 'wrap',
     alignItems: 'flex-start',
-  },
-  flatList: {
-    padding: 2,
   },
   firstView: {
     flex: 1,
@@ -193,17 +189,17 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     backgroundColor: '#333',
-    opacity: 0.9,
+    opacity: 0.8,
   },
   createdDate: {
     fontSize: 11,
     marginTop: 0,
     color: '#fff',
     fontWeight: 'bold',
+    fontFamily: 'OpenSans-Regular',
   },
   card: {
     flex: 1,
-    margin: 0,
     borderWidth: 0.3,
   },
   itemLeft: {
@@ -221,14 +217,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 2,
   },
   firstPostImg: {
-    height: 240,
+    height: 280,
     width: '100%',
-    borderRadius: 3,
+    borderRadius: 0,
   },
   postImg: {
     height: '100%',
     width: 120,
-    borderRadius: 3,
+    borderRadius: 10,
   },
   avatar: {
     margin: 0,
@@ -240,6 +236,7 @@ const styles = StyleSheet.create({
     fontSize: 11,
     marginTop: 3,
     color: '#777',
+    fontFamily: 'OpenSans-Regular',
   },
   icon: {
     width: 20,
@@ -247,20 +244,22 @@ const styles = StyleSheet.create({
   },
   text: {
     padding: 0,
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: 'normal',
+    fontFamily: 'CrimsonText-Bold',
   },
   firstText: {
     padding: 0,
-    fontSize: 18,
-    fontWeight: 'bold',
+    fontSize: 20,
     color: '#ffffff',
+    fontFamily: 'CrimsonText-Bold',
   },
   firstAuthor: {
     fontSize: 11,
-    marginTop: 3,
+    marginTop: 1,
     fontWeight: 'bold',
     color: '#ffffff',
+    fontFamily: 'OpenSans-Regular',
   },
   spinnerTextStyle: {
     color: '#ffffff',
