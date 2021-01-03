@@ -211,13 +211,11 @@ const styles = StyleSheet.create({
   },
   itemRight: {
     width: '70%',
+    padding: 5,
   },
   footerContainer: {
     flexDirection: 'row',
-    paddingLeft: 0,
-    paddingRight: 2,
-    paddingTop: 2,
-    paddingBottom: 2,
+    padding: 10,
   },
   footerControl: {
     marginHorizontal: 2,

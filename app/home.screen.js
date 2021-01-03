@@ -15,7 +15,7 @@ export const HomeScreen = ({navigation}) => {
   const renderSettingsAction = () => (
     <TouchableOpacity onPress={themeContext.toggleTheme} activeOpacity={0.5}>
       <Text>
-        <Icon style={{width: 32, height: 32}} fill="orange" name="sun" />
+        <Icon style={{width: 32, height: 32}} fill="orange" name="moon" />
       </Text>
     </TouchableOpacity>
   );
