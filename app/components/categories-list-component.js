@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {View, StyleSheet, FlatList, TouchableHighlight} from 'react-native';
-import {Card, Text, Layout, Icon} from '@ui-kitten/components';
+import {Card, Text, Icon} from '@ui-kitten/components';
 import Spinner from 'react-native-loading-spinner-overlay';
-import axios from 'axios';
+import {ApiService} from '../service/api.service';
 
 export default class CategoriesListComponent extends Component {
   constructor(props) {
@@ -62,15 +62,10 @@ export default class CategoriesListComponent extends Component {
 
   // Functions
   getCategories = () => {
-    console.log('Running => getCategories');
     this.setState({
       loading: true,
     });
-    axios
-      .get(
-        'https://gamenewsplus.net/wp-json/wp/v2/categories?per_page=20&page=' +
-          this.state.page,
-      )
+    ApiService.getCategories(this.state.page)
       .then((response) => {
         this.setState({
           dataSource: this.state.dataSource.concat(response.data),

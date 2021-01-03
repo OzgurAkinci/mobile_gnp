@@ -3,8 +3,6 @@ import {SafeAreaView} from 'react-native';
 import {
   Divider,
   Icon,
-  Layout,
-  Text,
   TopNavigation,
   TopNavigationAction,
 } from '@ui-kitten/components';

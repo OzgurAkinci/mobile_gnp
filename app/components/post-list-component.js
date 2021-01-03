@@ -1,9 +1,15 @@
 import React, {Component} from 'react';
-import {View, StyleSheet, FlatList, Image} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  FlatList,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 import {Card, Text, Avatar} from '@ui-kitten/components';
 import Spinner from 'react-native-loading-spinner-overlay';
-import axios from 'axios';
-import * as Util from '../util/Util';
+import {ApiService} from '../service/api.service';
+import {UtilFunctions} from '../util/util.functions';
 
 export default class PostListComponent extends Component {
   constructor(props) {
@@ -18,6 +24,10 @@ export default class PostListComponent extends Component {
   componentDidMount() {
     this.getPosts();
   }
+
+  handleNavigatePostDetail = (id) => {
+    this.props.navigatePostDetail?.(id);
+  };
 
   render() {
     return (
@@ -51,7 +61,12 @@ export default class PostListComponent extends Component {
               index === 0 ? (
                 <AccentFirst {...props} post={post} index={index} />
               ) : (
-                <Accent {...props} post={post} index={index} />
+                <TouchableOpacity
+                  onPress={() => {
+                    this.handleNavigatePostDetail(post);
+                  }}>
+                  <Accent {...props} post={post} index={index} />
+                </TouchableOpacity>
               )
             }
           />
@@ -62,15 +77,10 @@ export default class PostListComponent extends Component {
 
   // Functions
   getPosts = () => {
-    console.log('Running => getPosts, pageNumber =>  ' + this.state.page);
     this.setState({
       loading: true,
     });
-    axios
-      .get(
-        'https://gamenewsplus.net/wp-json/wp/v2/posts?_embed&per_page=10&page=' +
-          this.state.page,
-      )
+    ApiService.getPosts(this.state.page)
       .then((response) => {
         this.setState({
           dataSource: this.state.dataSource.concat(response.data),
@@ -95,18 +105,9 @@ const AccentFirst = ({post, index}) => (
         uri: post ? post._embedded['wp:featuredmedia'][0].source_url : '',
       }}
     />
-    <View
-      style={{
-        flex: 1,
-        padding: 10,
-        width: '100%',
-        position: 'absolute',
-        bottom: 0,
-        backgroundColor: '#111',
-        opacity: 0.9,
-      }}>
+    <View style={styles.firstView}>
       <Text style={styles.firstText}>
-        {Util.replaceSpecialCharacters(post.title.rendered)}
+        {UtilFunctions.replaceSpecialCharacters(post.title.rendered)}
       </Text>
       {<AvatarView post={post} index={index} />}
     </View>
@@ -115,17 +116,21 @@ const AccentFirst = ({post, index}) => (
 
 const Accent = ({post, index}) => (
   <View style={[styles.footerContainer]}>
-    <Image
-      style={styles.postImg}
-      source={{
-        uri: post ? post._embedded['wp:featuredmedia'][0].source_url : '',
-      }}
-    />
-    <View style={{flex: 1, padding: 10}}>
-      <Text style={styles.text}>
-        {Util.replaceSpecialCharacters(post.title.rendered)}
-      </Text>
-      {<AvatarView post={post} index={index} />}
+    <View style={styles.itemLeft}>
+      <Image
+        style={styles.postImg}
+        source={{
+          uri: post ? post._embedded['wp:featuredmedia'][0].source_url : '',
+        }}
+      />
+    </View>
+    <View style={styles.itemRight}>
+      <View style={{flex: 1, padding: 10}}>
+        <Text style={styles.text}>
+          {UtilFunctions.replaceSpecialCharacters(post.title.rendered)}
+        </Text>
+        {<AvatarView post={post} index={index} />}
+      </View>
     </View>
   </View>
 );
@@ -134,7 +139,7 @@ const AvatarView = ({post, index}) => (
   <View style={{flexDirection: 'row'}}>
     <Avatar
       style={styles.avatar}
-      shape="medium"
+      shape="square"
       source={
         post && post._embedded.author[0].avatar_urls['24'] !== undefined
           ? {
@@ -155,14 +160,31 @@ const AvatarView = ({post, index}) => (
 const styles = StyleSheet.create({
   topContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
   },
   flatList: {
-    padding: 5,
+    padding: 2,
+  },
+  firstView: {
+    flex: 1,
+    padding: 10,
+    width: '100%',
+    position: 'absolute',
+    bottom: 0,
+    backgroundColor: '#333',
+    opacity: 0.9,
   },
   card: {
     flex: 1,
     margin: 0,
+    borderWidth: 0.3,
+  },
+  itemLeft: {
+    width: '30%',
+  },
+  itemRight: {
+    width: '70%',
   },
   footerContainer: {
     flexDirection: 'row',
@@ -177,35 +199,38 @@ const styles = StyleSheet.create({
   firstPostImg: {
     height: 240,
     width: '100%',
+    borderRadius: 3,
   },
   postImg: {
-    //height: 140,
+    height: '100%',
     width: 120,
+    borderRadius: 3,
   },
   avatar: {
     margin: 0,
-    width: 24,
-    height: 24,
+    width: 20,
+    height: 20,
+    borderRadius: 3,
   },
   author: {
     fontSize: 11,
-    marginTop: 5,
-    color: '#333333',
+    marginTop: 3,
+    color: '#777',
   },
   text: {
     padding: 0,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   firstText: {
     padding: 0,
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#ffffff',
   },
   firstAuthor: {
     fontSize: 11,
-    marginTop: 5,
+    marginTop: 3,
     fontWeight: 'bold',
     color: '#ffffff',
   },
