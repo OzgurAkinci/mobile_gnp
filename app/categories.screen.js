@@ -1,5 +1,5 @@
-import React from 'react';
-import {SafeAreaView} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {SafeAreaView, Text, TouchableOpacity} from 'react-native';
 import {
   Divider,
   Icon,
@@ -7,13 +7,23 @@ import {
   TopNavigationAction,
 } from '@ui-kitten/components';
 import CategoriesListComponent from './components/categories-list-component';
-
+import {ThemeContext} from '../theme-context';
 const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
 
 export const CategoriesScreen = ({navigation}) => {
+  const themeContext = React.useContext(ThemeContext);
+
   const navigateBack = () => {
     navigation.goBack();
   };
+
+  const renderSettingsAction = () => (
+    <TouchableOpacity onPress={themeContext.toggleTheme} activeOpacity={0.5}>
+      <Text>
+        <Icon style={{width: 32, height: 32}} fill="orange" name="sun" />
+      </Text>
+    </TouchableOpacity>
+  );
 
   const BackAction = () => (
     <TopNavigationAction icon={BackIcon} onPress={navigateBack} />
@@ -22,9 +32,9 @@ export const CategoriesScreen = ({navigation}) => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <TopNavigation
-        title="GameNewsPlus+"
+        title="Game News Plus"
         alignment="center"
-        accessoryLeft={BackAction}
+        accessoryRight={renderSettingsAction}
       />
       <Divider />
       <CategoriesListComponent />

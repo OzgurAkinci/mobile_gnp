@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   SafeAreaView,
@@ -7,6 +7,7 @@ import {
   useWindowDimensions,
   ScrollView,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 import {
   Avatar,
@@ -19,10 +20,12 @@ import {
 import {UtilFunctions} from './util/util.functions';
 import HTML from 'react-native-render-html';
 import Moment from 'moment';
+import {ThemeContext} from '../theme-context';
 
 const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
 
 export const DetailScreen = ({navigation, route}) => {
+  const themeContext = React.useContext(ThemeContext);
   const navigateBack = () => {
     navigation.goBack();
   };
@@ -30,18 +33,25 @@ export const DetailScreen = ({navigation, route}) => {
     <TopNavigationAction icon={BackIcon} onPress={navigateBack} />
   );
   const {post} = route.params;
-  const contentWidth = useWindowDimensions().width;
+
+  const renderSettingsAction = () => (
+    <TouchableOpacity onPress={themeContext.toggleTheme} activeOpacity={0.5}>
+      <Text>
+        <Icon style={{width: 32, height: 32}} fill="orange" name="sun" />
+      </Text>
+    </TouchableOpacity>
+  );
 
   return (
     <SafeAreaView style={{flex: 1}}>
       <TopNavigation
-        title="GameNewsPlus+"
+        title="Game News Plus"
         alignment="center"
-        accessoryLeft={BackAction}
+        accessoryRight={renderSettingsAction}
       />
       <Divider />
       <View style={{height: '100%', backgroundColor: '#fff', padding: 0}}>
-        <View style={{padding: 15, paddingBottom: 5}}>
+        <View style={{padding: 15, paddingBottom: 0}}>
           {<AvatarView post={post} />}
         </View>
         <View style={{padding: 15, paddingBottom: 5}}>
@@ -61,12 +71,12 @@ export const DetailScreen = ({navigation, route}) => {
           <ScrollView>
             <HTML
               tagsStyles={{
-                body: {fontSize: 18},
-                p: {fontSize: 18, fontWeight: 'normal'},
-                strong: {fontSize: 20},
-                blockquote: {fontSize: 18},
-                a: {fontSize: 18, color: '#000'},
-                em: {fontSize: 18},
+                body: {fontSize: 16},
+                p: {fontSize: 16, fontWeight: 'normal'},
+                strong: {fontSize: 16},
+                blockquote: {fontSize: 16},
+                a: {fontSize: 16, color: '#000'},
+                em: {fontSize: 16},
                 img: {height: 250, width: 350},
               }}
               html={post.content.rendered}
@@ -107,15 +117,6 @@ const AvatarView = ({post}) => (
 );
 
 const styles = StyleSheet.create({
-  firstView: {
-    flex: 1,
-    padding: 10,
-    width: '100%',
-    position: 'absolute',
-    bottom: 0,
-    backgroundColor: '#333',
-    opacity: 0.9,
-  },
   firstText: {
     padding: 0,
     fontSize: 18,
@@ -123,24 +124,24 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   postImg: {
-    height: 200,
+    height: 150,
     width: '100%',
-    borderRadius: 3,
+    borderRadius: 0,
   },
   author: {
     fontSize: 13,
-    marginTop: 3,
+    marginTop: 0,
     fontWeight: 'bold',
     color: '#555',
   },
   createdDate: {
     fontSize: 13,
-    marginTop: 3,
+    marginTop: 0,
     color: '#999',
   },
   avatar: {
     margin: 0,
-    width: 40,
-    height: 40,
+    width: 32,
+    height: 32,
   },
 });

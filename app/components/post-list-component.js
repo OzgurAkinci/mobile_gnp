@@ -6,10 +6,11 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import {Card, Text, Avatar} from '@ui-kitten/components';
+import {Card, Text, Avatar, Icon} from '@ui-kitten/components';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {ApiService} from '../service/api.service';
 import {UtilFunctions} from '../util/util.functions';
+import Moment from 'moment';
 
 export default class PostListComponent extends Component {
   constructor(props) {
@@ -59,7 +60,12 @@ export default class PostListComponent extends Component {
             style={styles.card}
             accent={(props) =>
               index === 0 ? (
-                <AccentFirst {...props} post={post} index={index} />
+                <TouchableOpacity
+                  onPress={() => {
+                    this.handleNavigatePostDetail(post);
+                  }}>
+                  <AccentFirst {...props} post={post} index={index} />
+                </TouchableOpacity>
               ) : (
                 <TouchableOpacity
                   onPress={() => {
@@ -123,6 +129,20 @@ const Accent = ({post, index}) => (
           uri: post ? post._embedded['wp:featuredmedia'][0].source_url : '',
         }}
       />
+      <View
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          padding: 5,
+          borderBottomRightRadius: 8,
+          opacity: 0.9,
+          backgroundColor: '#333',
+        }}>
+        <Text style={styles.createdDate}>
+          {Moment(post.date).format('h:mm')}
+        </Text>
+      </View>
     </View>
     <View style={styles.itemRight}>
       <View style={{flex: 1, padding: 10}}>
@@ -175,6 +195,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#333',
     opacity: 0.9,
   },
+  createdDate: {
+    fontSize: 11,
+    marginTop: 0,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
   card: {
     flex: 1,
     margin: 0,
@@ -217,10 +243,14 @@ const styles = StyleSheet.create({
     marginTop: 3,
     color: '#777',
   },
+  icon: {
+    width: 20,
+    height: 20,
+  },
   text: {
     padding: 0,
-    fontSize: 16,
-    fontWeight: 'bold',
+    fontSize: 15,
+    fontWeight: 'normal',
   },
   firstText: {
     padding: 0,
