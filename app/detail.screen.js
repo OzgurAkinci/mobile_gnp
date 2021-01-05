@@ -8,7 +8,8 @@ import {
   ScrollView,
   Dimensions,
   TouchableOpacity,
-  WebView,
+  Linking,
+  PixelRatio,
 } from 'react-native';
 import {
   Avatar,
@@ -19,11 +20,27 @@ import {
   TopNavigationAction,
 } from '@ui-kitten/components';
 import {UtilFunctions} from './util/util.functions';
-import HTML from 'react-native-render-html';
+import HTML, {domNodeToHTMLString} from 'react-native-render-html';
 import Moment from 'moment';
 import {ThemeContext} from '../theme-context';
+import HTMLView from 'react-native-htmlview';
 
 const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
+const IMAGES_MAX_WIDTH = Dimensions.get('window').width - 50;
+const CUSTOM_STYLES = {};
+const CUSTOM_RENDERERS = {};
+const DEFAULT_PROPS = {
+  htmlStyles: CUSTOM_STYLES,
+  renderers: CUSTOM_RENDERERS,
+  imagesMaxWidth: IMAGES_MAX_WIDTH,
+  computeEmbeddedMaxWidth(contentWidth) {
+    return contentWidth - 40;
+  },
+  onLinkPress(evt, href) {
+    Linking.openURL(href);
+  },
+  debug: true,
+};
 
 export const DetailScreen = ({navigation, route}) => {
   const themeContext = React.useContext(ThemeContext);
@@ -42,6 +59,38 @@ export const DetailScreen = ({navigation, route}) => {
       </Text>
     </TouchableOpacity>
   );
+
+  function renderNode(node, index, siblings, parent, defaultRenderer) {
+    if (node.name === 'img') {
+      const {src, height} = node.attribs;
+      const imageHeight = height || 300;
+      return (
+        <Image
+          key={index}
+          style={{
+            width: Dimensions.get('window') * PixelRatio.get(),
+            height: imageHeight * PixelRatio.get(),
+          }}
+          source={{uri: src}}
+        />
+      );
+    } else if (node.name === 'img') {
+      const a = node.attribs;
+
+      return (
+        <Image
+          key={index}
+          source={{uri: a.src}}
+          //resizeMode={'stretch'}
+          style={{
+            flex: 1,
+            width: Dimensions.get('window').width,
+            height: 200,
+          }}
+        />
+      );
+    }
+  }
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -70,22 +119,19 @@ export const DetailScreen = ({navigation, route}) => {
           />
         </View>
         <View style={{flex: 1, padding: 15, paddingBottom: 5}}>
-          <ScrollView>
+          <ScrollView style={{flex: 1}}>
             <HTML
-              tagsStyles={{
-                body: {fontSize: 16},
-                p: {fontSize: 16, fontWeight: 'normal'},
-                strong: {fontSize: 16},
-                blockquote: {fontSize: 16},
-                a: {fontSize: 16, color: '#000'},
-                em: {fontSize: 16},
-                img: {height: 250, width: 350},
-              }}
-              source={post.content.rendered}
-              imagesMaxWidth={Dimensions.get('window').width}
-              ignoredStyles={['width', 'height', 'video']}
-              onLinkPress={(evt, href) => this.onLinkPress(href)}
+              {...DEFAULT_PROPS}
+              source={{html: post?.content?.rendered.replace(/<(\/)?p>/g, '')}}
+              //source={{html: post?.content?.rendered}}
+              contentWidth={useWindowDimensions.width}
+              baseFontStyle={{fontSize: 16}}
             />
+            {/*            <HTMLView
+              renderNode={renderNode}
+              value={post?.content?.rendered.replace(/<(\/)?p>/g, '')}
+              stylesheet={styles}
+            />*/}
           </ScrollView>
         </View>
       </View>

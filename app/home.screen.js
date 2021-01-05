@@ -22,7 +22,7 @@ export const HomeScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={{flex: 1}}>
-{/*      <TopNavigation
+      {/*      <TopNavigation
         title="Game News Plus"
         alignment="center"
         accessoryRight={renderSettingsAction}
