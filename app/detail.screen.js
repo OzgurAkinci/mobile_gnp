@@ -1,31 +1,35 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
   Image,
   SafeAreaView,
   StyleSheet,
   View,
-  useWindowDimensions,
-  ScrollView,
   Dimensions,
   TouchableOpacity,
   Linking,
   PixelRatio,
 } from 'react-native';
+import {WebView} from 'react-native-webview';
 import {
   Avatar,
   Divider,
   Icon,
   Text,
-  TopNavigation,
   TopNavigationAction,
+  Button,
 } from '@ui-kitten/components';
 import {UtilFunctions} from './util/util.functions';
-import HTML, {domNodeToHTMLString} from 'react-native-render-html';
 import Moment from 'moment';
 import {ThemeContext} from '../theme-context';
-import HTMLView from 'react-native-htmlview';
 
-const BackIcon = (props) => <Icon {...props} name="arrow-back" />;
+const BackIcon = (props) => (
+  <Icon
+    {...props}
+    style={{width: 25, height: 25}}
+    fill="grey"
+    name="arrow-back"
+  />
+);
 const IMAGES_MAX_WIDTH = Dimensions.get('window').width - 50;
 const CUSTOM_STYLES = {};
 const CUSTOM_RENDERERS = {};
@@ -55,7 +59,7 @@ export const DetailScreen = ({navigation, route}) => {
   const renderSettingsAction = () => (
     <TouchableOpacity onPress={themeContext.toggleTheme} activeOpacity={0.5}>
       <Text>
-        <Icon style={{width: 32, height: 32}} fill="orange" name="moon" />
+        <Icon style={{width: 32, height: 32}} fill="orange" name="star" />
       </Text>
     </TouchableOpacity>
   );
@@ -92,20 +96,29 @@ export const DetailScreen = ({navigation, route}) => {
     }
   }
 
+  const html_top =
+    '<!DOCTYPE html>' +
+    '<html><head>' +
+    "<script async src='https://platform.twitter.com/widgets.js' charset='utf-8'></script>" +
+    '<style>' +
+    'body{font-size: 1.1em}' +
+    '</style>' +
+    '</head><body>';
+  const html_bottom = '</body></html>';
   return (
     <SafeAreaView style={{flex: 1}}>
-      <TopNavigation
+      {/*      <TopNavigation
         title="Game News Plus"
         alignment="center"
         accessoryLeft={BackAction}
         accessoryRight={renderSettingsAction}
-      />
+      />*/}
       <Divider />
       <View style={{height: '100%', backgroundColor: '#fff', padding: 0}}>
-        <View style={{padding: 15, paddingBottom: 0}}>
-          {<AvatarView post={post} />}
+        <View style={{padding: 10, paddingBottom: 0}}>
+          {<AvatarView post={post} ba={BackAction} />}
         </View>
-        <View style={{padding: 15, paddingBottom: 5}}>
+        <View style={{padding: 10, paddingBottom: 5}}>
           <Text style={styles.firstText}>
             {UtilFunctions.replaceSpecialCharacters(post.title.rendered)}
           </Text>
@@ -119,28 +132,46 @@ export const DetailScreen = ({navigation, route}) => {
           />
         </View>
         <View style={{flex: 1, padding: 15, paddingBottom: 5}}>
-          <ScrollView style={{flex: 1}}>
-            <HTML
-              {...DEFAULT_PROPS}
-              source={{html: post?.content?.rendered.replace(/<(\/)?p>/g, '')}}
-              //source={{html: post?.content?.rendered}}
-              contentWidth={useWindowDimensions.width}
-              baseFontStyle={{fontSize: 16}}
-            />
-            {/*            <HTMLView
-              renderNode={renderNode}
-              value={post?.content?.rendered.replace(/<(\/)?p>/g, '')}
-              stylesheet={styles}
-            />*/}
+          {/*<ScrollView>*/}
+          <WebView
+            scalesPageToFit={false}
+            scrollEnabled={false}
+            bounces={false}
+            javaScriptEnabled={true}
+            style={{height: 450, resizeMode: 'cover', flex: 1}}
+            source={{
+              html:
+                html_top +
+                post?.content?.rendered.replace(
+                  '<div class="mace-youtube" data-mace-video',
+                  '<iframe frameborder="0" style="height:100%;width:100%; left:0; right:0; position:absolute;" class="youtube" src',
+                ) +
+                html_bottom,
+            }}
+            automaticallyAdjustContentInsets={true}
+          />
+          {/*
           </ScrollView>
+*/}
         </View>
       </View>
     </SafeAreaView>
   );
 };
 
-const AvatarView = ({post}) => (
-  <View style={{flexDirection: 'row'}}>
+const AvatarView = ({post, ba}) => (
+  <View
+    style={{
+      flexDirection: 'row',
+      borderBottomColor: '#ddd',
+      borderBottomWidth: 0.5,
+    }}>
+    <Button
+      style={styles.button}
+      appearance="ghost"
+      status="danger"
+      accessoryLeft={ba}
+    />
     <Avatar
       style={styles.avatar}
       shape="round"
@@ -167,13 +198,13 @@ const AvatarView = ({post}) => (
 const styles = StyleSheet.create({
   firstText: {
     padding: 0,
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: 'bold',
     color: '#333',
     fontFamily: 'CrimsonText-Bold',
   },
   postImg: {
-    height: 150,
+    height: 110,
     width: '100%',
     borderRadius: 0,
   },
@@ -187,6 +218,10 @@ const styles = StyleSheet.create({
     fontSize: 13,
     marginTop: 0,
     color: '#999',
+  },
+  button: {
+    height: 32,
+    width: 32,
   },
   avatar: {
     margin: 0,
