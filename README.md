@@ -20,3 +20,5 @@ Run on Android Device
 npm install
 react-native run-android
 ```
+
+![alt text](https://github.com/OzgurAkinci/mobile_gnp/blob/main/screenshot.png?raw=true)
