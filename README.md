@@ -21,4 +21,4 @@ npm install
 react-native run-android
 ```
 
-![Screenshot](https://github.com/OzgurAkinci/mobile_gnp/blob/main/screenshot.png | width=200)
+![Screenshot](https://github.com/OzgurAkinci/mobile_gnp/blob/main/screenshot.png?raw=true)
